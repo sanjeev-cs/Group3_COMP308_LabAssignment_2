@@ -1,40 +1,44 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import gameService from '../../services/gameService';
+import { gql } from '@apollo/client';
+import { useQuery } from '@apollo/client/react';
 import { useAuth } from '../../context/AuthContext';
 import Button from '../../components/common/Button';
 import ThreeGameCard from '../../components/three/ThreeGameCard';
 
+const GET_GAME = gql`
+  query GetGame($id: ID!) {
+    game(id: $id) {
+      id
+      title
+      genre
+      platform
+      releaseYear
+      developer
+      rating
+      description
+      imageUrl
+    }
+  }
+`;
 
 const GameDetails = () => {
     const { id } = useParams(); // Game ID from route
-    const [game, setGame] = useState(null);
-    const [loading, setLoading] = useState(true);
     const { user } = useAuth();
     const navigate = useNavigate();
+
+    const { data, loading, error } = useQuery(GET_GAME, {
+        variables: { id }
+    });
 
     const [imageValid, setImageValid] = useState(false);
     const [imageChecked, setImageChecked] = useState(false);
 
-    // Fetch game details
-    useEffect(() => {
-        const fetchGame = async () => {
-            try {
-                const { data } = await gameService.getGameById(id);
-                setGame(data);
-            } catch (err) {
-                console.error(err);
-                navigate('/games'); // Redirect if game not found
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchGame();
-    }, [id, navigate]);
+    const game = data?.game;
 
     const BASE_URL = import.meta.env.VITE_API_URL
         ? import.meta.env.VITE_API_URL.replace('/api', '')
-        : 'http://localhost:4000';
+        : 'http://localhost:4000'; // updated to 4000 as it's the backend port
 
     // Validate Image
     useEffect(() => {
@@ -56,7 +60,7 @@ const GameDetails = () => {
     }, [game, BASE_URL]);
 
     if (loading) return <div>Loading...</div>;
-    if (!game) return <div>Game not found</div>;
+    if (error || !game) return <div>Game not found</div>;
 
     return (
         <div className="game-details">

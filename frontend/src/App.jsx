@@ -7,6 +7,7 @@ import RegisterForm from './features/auth/RegisterForm';
 import GameList from './features/games/GameList';
 import GameDetails from './features/games/GameDetails';
 import AdminDashboard from './features/admin/AdminDashboard';
+import Profile from './features/profile/Profile';
 import ProtectedRoute from './components/ProtectedRoute';
 import { Toaster } from 'react-hot-toast';
 
@@ -39,6 +40,15 @@ function App() {
               element={
                 <ProtectedRoute>
                   <GameList view="collection" /> {/* User's game collection */}
+                </ProtectedRoute>
+              } 
+            />
+
+            <Route 
+              path="profile" 
+              element={
+                <ProtectedRoute>
+                  <Profile /> {/* User's profile with 3D Avatar */}
                 </ProtectedRoute>
               } 
             />

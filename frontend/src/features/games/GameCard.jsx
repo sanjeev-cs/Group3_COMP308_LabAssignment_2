@@ -55,7 +55,7 @@ const GameCard = ({ game, onAdd, onRemove, inCollection }) => {
                 <div className={`actions ${user && user.role === 'admin' ? 'actions-admin' : ''}`}>
                     {/* Details button */}
                     <Link 
-                        to={user ? `/games/${game._id}` : '/login'} 
+                        to={user ? `/games/${game.id}` : '/login'} 
                         className={`details-btn ${user && user.role === 'admin' ? 'details-btn-admin' : ''}`}
                     >
                         Details
@@ -65,7 +65,7 @@ const GameCard = ({ game, onAdd, onRemove, inCollection }) => {
                     {(!user || user.role !== 'admin') && (
                         inCollection ? (
                             <Button 
-                                onClick={() => handleAction(() => onRemove(game._id))} 
+                                onClick={() => handleAction(() => onRemove(game.id))} 
                                 variant="danger" 
                                 className="btn-block"
                             >
@@ -73,7 +73,7 @@ const GameCard = ({ game, onAdd, onRemove, inCollection }) => {
                             </Button>
                         ) : (
                             <Button 
-                                onClick={() => handleAction(() => onAdd(game._id))} 
+                                onClick={() => handleAction(() => onAdd(game.id))} 
                                 variant="primary" 
                                 className="btn-block"
                             >

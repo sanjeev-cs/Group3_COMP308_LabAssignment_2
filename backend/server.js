@@ -8,7 +8,7 @@ import configureExpress from './config/express.js';
 await connectDB();
 
 // Create and configure Express app
-const app = configureExpress();
+const app = await configureExpress();
 
 // Start server
 app.listen(config.port, () => {

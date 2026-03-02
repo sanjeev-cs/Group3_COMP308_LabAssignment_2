@@ -22,7 +22,7 @@ const useLoginForm = () => {
             await login(formData); // Call auth context login
             navigate('/'); // Redirect on success
         } catch (err) {
-            setError(err.response?.data?.error || 'Login failed'); // Set error if login fails
+            setError(err.message || 'Login failed'); // Set error if login fails
         }
     };
 

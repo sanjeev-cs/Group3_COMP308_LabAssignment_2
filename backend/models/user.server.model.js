@@ -12,10 +12,22 @@ const UserSchema = new mongoose.Schema({
         trim: true,
         lowercase: true
     },
+    email: {
+        type: String,
+        unique: true,
+        required: 'Email is required',
+        trim: true,
+        lowercase: true,
+        match: [/.+\@.+\..+/, 'Please fill a valid email address']
+    },
     password: {
         type: String,
         required: 'Password is required',
         minlength: 6
+    },
+    avatarImage: {
+        type: String, // Can store JSON config for 3D avatar (colors, styles, etc)
+        default: '{}'
     },
     role: {
         type: String,

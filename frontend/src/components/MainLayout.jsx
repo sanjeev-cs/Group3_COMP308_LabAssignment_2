@@ -1,6 +1,8 @@
 import React from 'react';
 import { Outlet, Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { Canvas } from '@react-three/fiber';
+import Avatar from '../components/three/Avatar';
 import AnimatedBackground from '../components/three/AnimatedBackground';
 import Button from '../components/common/Button';
 
@@ -8,6 +10,15 @@ import Button from '../components/common/Button';
 const MainLayout = () => {
     const { user, logout } = useAuth(); // Auth state and logout action
     const navigate = useNavigate();
+
+    // Parse user's avatar from DB
+    let userAvatar = 'robot';
+    try {
+        if (user?.avatarImage && user.avatarImage.startsWith('{')) {
+            const parsed = JSON.parse(user.avatarImage);
+            if (parsed.character) userAvatar = parsed.character;
+        }
+    } catch(e) {}
 
     // Handles logout and redirects to login page
     const handleLogout = async () => {
@@ -49,8 +60,17 @@ const MainLayout = () => {
                             )}
 
                             {/* Logged-in user info */}
-                            <span className="user-greeting">
-                                Hi, {user.username}
+                            <span className="user-greeting" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                <Link to="/profile" style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', color: 'inherit' }}>
+                                    <div style={{ width: '40px', height: '40px', borderRadius: '50%', overflow: 'hidden', background: 'rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                        <Canvas camera={{ position: [0, 0, 2.8], fov: 45 }}>
+                                            <ambientLight intensity={1.5} />
+                                            <directionalLight position={[0, 5, 5]} intensity={2} />
+                                            <Avatar character={userAvatar} isThumbnail={true} />
+                                        </Canvas>
+                                    </div>
+                                    <span>Hi, {user.username}</span>
+                                </Link>
                             </span>
 
                             <Button
