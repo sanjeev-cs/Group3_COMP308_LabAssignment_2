@@ -1,13 +1,12 @@
 import { useState } from 'react';
-import authService from '../services/authService';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 // Custom hook for handling registration form state and submission
 const useRegisterForm = () => {
-    const [formData, setFormData] = useState({ username: '', password: '' }); // Form input values
+    const [formData, setFormData] = useState({ username: '', email: '', password: '' }); // Form input values
     const [error, setError] = useState(''); // Error message
-    const { login } = useAuth(); // Auth context
+    const { register } = useAuth(); // Auth context
     const navigate = useNavigate();
 
     // Update form values on input change
@@ -20,12 +19,11 @@ const useRegisterForm = () => {
         e.preventDefault();
         setError('');
         try {
-            await authService.register(formData); // Call backend registration
-            await login(formData); // Log in user automatically after registration
+            await register(formData); // Log in user automatically after registration
             navigate('/'); // Redirect to home
         } catch (err) {
-            console.error('Frontend Registration Error:', err.response?.data);
-            setError(err.response?.data?.error || 'Registration failed'); // Set error if registration fails
+            console.error('Frontend Registration Error:', err);
+            setError(err.message || 'Registration failed'); // Set error if registration fails
         }
     };
 

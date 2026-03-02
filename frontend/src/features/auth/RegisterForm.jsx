@@ -34,6 +34,17 @@ const RegisterForm = () => {
                 </div>
 
                 <div className="form-group">
+                    <label>Email</label>
+                    <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+
+                <div className="form-group">
                     <label>Password</label>
                     <input
                         type="password"
