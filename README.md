@@ -5,12 +5,14 @@ A full-stack MERN (MongoDB, Express, React, Node.js) application for managing a 
 ## 🌟 Features
 
 -   **Interactive 3D Game Cards**: Premium "Digital Collectible" style cards with holographic effects and mouse-tracking interaction.
+-   **3D Character Avatars**: Users can select and customize their profile with fully animating, dynamically-scaled 3D character avatars (Robot, Parrot, Flamingo) built with `@react-three/fiber` and `@react-three/drei`.
+-   **GraphQL API**: Fully modernized data layer utilizing Apollo Server and Apollo Client for optimized UI data fetching, caching, and integrated local state auth links.
 -   **Role-Based Access**:
     -   **Visitors**: Browse the game library.
-    -   **Users**: Create an account, manage a personal "My Collection", and view game details.
+    -   **Users**: Create an account, customize a 3D Avatar profile, manage "My Collection", and view game details.
     -   **Admins**: Full CRUD capabilities—Add, Edit, and Delete games from the global library.
--   **Modern UI**: Built with React, Three.js (Fiber/Drei), and Glassmorphism design principles.
--   **Secure**: JWT-based authentication and secure password hashing.
+-   **Modern UI**: Built with React, Three.js, and Glassmorphism design principles.
+-   **Secure**: JWT-based authentication mapped natively through GraphQL HTTP Headers.
 
 ---
 
@@ -112,10 +114,10 @@ The frontend is built with React and Vite.
 
 ## 🎨 Technology Stack
 
-*   **Frontend**: React, Vite, React Router, Axios, **React Three Fiber (Three.js)**.
-*   **Backend**: Node.js, Express.js.
+*   **Frontend**: React, Vite, React Router, **Apollo Client** (`@apollo/client`), **React Three Fiber** (`@react-three/fiber`), React Three Drei (`@react-three/drei`).
+*   **Backend**: Node.js, Express.js, **Apollo Server** (`@apollo/server`), **GraphQL** (`graphql`).
 *   **Database**: MongoDB (Mongoose ODM).
-*   **Styling**: Custom CSS3.
-*   **Three.js**
+*   **Styling**: Custom CSS3 & Glassmorphism.
+*   **Static Assets**: External GLTF/GLB remote hosting.
 
 ---
